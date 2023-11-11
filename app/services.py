@@ -716,9 +716,10 @@ async def get_symbol_data(symbol: str):
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
     response = requests.get(url)
     data = response.json()
-    if "Error Message" in data:
-        raise HTTPException(status_code=404, detail=f"Symbol '{symbol}' not found!")
+    if "Error Message" in data or "Information" in data:
+        raise HTTPException(status_code=404, detail=data["Information"])
 
+    print(data)
     return [
         {
             "date": x[0],

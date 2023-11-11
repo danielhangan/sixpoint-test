@@ -13,11 +13,16 @@ async def get_symbol(
     background_tasks: BackgroundTasks,
     database: Session = Depends(db.get_session),
 ):
+    if len(symbol) < 3:
+        return {"detail": "Symbol must be at least 3 characters long."}
+
     # Upper case symbol
     symbol = symbol.upper()
 
     # check if symbol exists in database
     symmbol_db_data = await validator.get_symbol(symbol, database)
+
+    # fecth symbol data
     symbol_api_data = await services.get_symbol_data(symbol)
 
     if not symmbol_db_data:
