@@ -43,5 +43,5 @@ async def get_all_symbols(database: Session = Depends(db.get_session)):
 
 
 # suggestions:
-# function that gets all symbol in database and updates data them every day. Run with a cron job.
+# function that gets all symbol from database and updates data them every day. Run with a cron job.
 # Cache the results with fastapi-redis
